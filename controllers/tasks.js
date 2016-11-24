@@ -1,8 +1,19 @@
 var Task = require('../models/task.js');
 
 // GET - Return all tasks
-exports.findAllTasks = function(req, res) {  
-    Task.find(function(err, tasks) {
+exports.findAllTasks = function(req, res) {
+    // QueryString
+    var queryString = '';
+    if (req.query.state) {
+        if (queryString) {
+            queryString += ', ';
+        }
+        queryString += '"state": "' + req.query.state + '"'; 
+    }
+    queryString = '{' + queryString + '}';
+    var queryJSON = JSON.parse(queryString);
+
+    Task.find(queryJSON, function(err, tasks) {
         if(err) {
             return res.status(500).send(err.message);
         }
