@@ -31,7 +31,7 @@ exports.addTask = function(req, res) {
 
     var task = new Task({
         description:    req.body.description,
-        createDate:     req.body.createDate,
+        createDate:     Date.now(),
         state:          req.body.state
     });
 
